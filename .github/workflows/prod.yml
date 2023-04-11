@@ -45,7 +45,7 @@ jobs:
     
   # Deploy
     - name: FTP Deploy (Web)
-      uses: SamKirkland/FTP-Deploy-Action@4.3.4
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with: 
         server: ${{ secrets.PROD_FTP_SERVER }}
         username: ${{ secrets.PROD_FTP_USERNAME }}
