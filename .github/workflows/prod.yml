@@ -23,7 +23,7 @@ jobs:
 # Restore and build Web Frontend
   # Restore
     - name: Restore dependencies (Web)
-      run: dotnet restore
+      run: dotnet restore --runtime net7.0/linux-x64
       working-directory: Wetcardboard_Utilities
     
   # Build
@@ -42,7 +42,7 @@ jobs:
     
   # Publish
     - name: Publish (Web)
-      run: dotnet publish --configuration Release --no-restore --output ./publish --self-contained true -f net7.0
+      run: dotnet publish --configuration Release --no-restore --output ./publish --self-contained true --runtime win-x64
       working-directory: Wetcardboard_Utilities
     
   # Deploy
