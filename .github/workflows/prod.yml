@@ -44,6 +44,14 @@ jobs:
     - name: Publish (Web)
       run: dotnet publish --configuration Release --output ./publish --self-contained true -f net7.0 -r win-x86
       working-directory: Wetcardboard_Utilities
+      
+  # Secrets
+    - name: AppSettings Secrets (Web)
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: Wetcardboard_Utilities/publish/appsettings.Development.json
+      env:
+        ConnectionStrings.wetcardboard_utilities_mysql: ${{ secrets.PROD_CONNECTIONSTRING_WETCARDBOARD_UTILITIES_MYSQL }}
     
   # Deploy
     - name: FTP Deploy (Web)
