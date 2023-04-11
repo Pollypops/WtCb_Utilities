@@ -42,6 +42,7 @@ jobs:
   # Publish
     - name: Publish (Web)
       run: dotnet publish --configuration Release --no-restore --output ./publish
+      working-directory: Wetcardboard_Utilities
     
   # Deploy
     - name: FTP Deploy (Web)
