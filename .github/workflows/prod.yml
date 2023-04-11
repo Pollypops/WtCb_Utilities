@@ -18,7 +18,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 7.0.x
 
 # Restore and build Web Frontend
   # Restore
@@ -45,14 +45,14 @@ jobs:
       working-directory: Wetcardboard_Utilities
     
   # Deploy
-    - name: FTP Deploy (Web)
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with: 
-        server: ${{ secrets.PROD_FTP_SERVER }}
-        username: ${{ secrets.PROD_FTP_USERNAME }}
-        password: ${{ secrets.PROD_FTP_PASSWORD }}
-        server-dir: ${{ secrets.PROD_FTP_SERVER_DIR }}
-        local-dir: Wetcardboard_Utilities/publish/
+  #  - name: FTP Deploy (Web)
+  #    uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+  #    with: 
+  #      server: ${{ secrets.PROD_FTP_SERVER }}
+  #      username: ${{ secrets.PROD_FTP_USERNAME }}
+  #      password: ${{ secrets.PROD_FTP_PASSWORD }}
+  #      server-dir: public_html/Utilities/Web/
+  #      local-dir: Wetcardboard_Utilities/publish/
       
 # Restore and build Api Backend
     - name: Restore dependencies (Api)
