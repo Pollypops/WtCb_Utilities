@@ -61,6 +61,7 @@ jobs:
         Jwt.Issuer: ${{ secrets.PROD_JWT_ISSUER }}
         Jwt.Audience: ${{ secrets.PROD_JWT_AUDIENCE }}
         Jwt.Key: ${{ secrets.PROD_JWT_KEY }}
+        ApiService_BasePath: ${{ secrets.PROD_APISERVICEBASEPATH }}
     
   # Deploy
     - name: FTP Deploy (Web)
