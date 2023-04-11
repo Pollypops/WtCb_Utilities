@@ -58,6 +58,9 @@ jobs:
         Azure.Ad_Login.Authorization.code_challenge: ${{ secrets.PROD_AZURE_ADLOGIN_AUTHORIZATION_CODECHALLENGE }}
         Azure.Ad_Login.Authorization.code_challenge_method: ${{ secrets.PROD_AZURE_ADLOGIN_AUTHORIZATION_CODECHALLENGEMETHOD }}
         Azure.Ad_Login.Authorization.code_verifier: ${{ secrets.PROD_AZURE_ADLOGIN_AUTHORIZATION_CODEVERIFIER }}
+        Jwt.Issuer: ${{ secrets.PROD_JWT_ISSUER }}
+        Jwt.Audience: ${{ secrets.PROD_JWT_AUDIENCE }}
+        Jwt.Key: ${{ secrets.PROD_JWT_KEY }}
     
   # Deploy
     - name: FTP Deploy (Web)
