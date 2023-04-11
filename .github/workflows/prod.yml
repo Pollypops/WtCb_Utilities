@@ -52,6 +52,12 @@ jobs:
         files: Wetcardboard_Utilities/publish/appsettings.Development.json
       env:
         ConnectionStrings.wetcardboard_utilities_mysql: ${{ secrets.PROD_CONNECTIONSTRING_WETCARDBOARD_UTILITIES_MYSQL }}
+        Azure.Ad_Login.tenant: ${{ secrets.PROD_AZURE_ADLOGIN_TENANT }}
+        Azure.Ad_Login.client_id: ${{ secrets.PROD_AZURE_ADLOGIN_CLIENTID }}
+        Azure.Ad_Login.client_secret_timeReg: ${{ secrets.PROD_AZURE_ADLOGIN_CLIENTSECRETTIMEREG }}
+        Azure.Ad_Login.Authorization.code_challenge: ${{ secrets.PROD_AZURE_ADLOGIN_AUTHORIZATION_CODECHALLENGE }}
+        Azure.Ad_Login.Authorization.code_challenge_method: ${{ secrets.PROD_AZURE_ADLOGIN_AUTHORIZATION_CODECHALLENGEMETHOD }}
+        Azure.Ad_Login.Authorization.code_verifier: ${{ secrets.PROD_AZURE_ADLOGIN_AUTHORIZATION_CODEVERIFIER }}
     
   # Deploy
     - name: FTP Deploy (Web)
