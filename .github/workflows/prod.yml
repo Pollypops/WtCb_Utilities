@@ -49,7 +49,7 @@ jobs:
     - name: AppSettings Secrets (Web)
       uses: microsoft/variable-substitution@v1
       with:
-        files: Wetcardboard_Utilities/publish/appsettings.Development.json
+        files: Wetcardboard_Utilities/publish/appsettings.json
       env:
         ConnectionStrings.wetcardboard_utilities_mysql: ${{ secrets.PROD_CONNECTIONSTRING_WETCARDBOARD_UTILITIES_MYSQL }}
         Azure.Ad_Login.tenant: ${{ secrets.PROD_AZURE_ADLOGIN_TENANT }}
