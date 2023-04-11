@@ -30,6 +30,7 @@ jobs:
     - name: Build (Web) - Debug
       run: dotnet build --no-restore
       working-directory: Wetcardboard_Utilities
+      
     - name: Build (Web) - Release
       run: dotnet build --configuration Release --no-restore
       working-directory: Wetcardboard_Utilities
