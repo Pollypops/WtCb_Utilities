@@ -42,7 +42,7 @@ jobs:
     
   # Publish
     - name: Publish (Web)
-      run: dotnet publish --configuration Release --no-restore --output ./publish --self-contained true -f net7.0*
+      run: dotnet publish --configuration Release --no-restore --output ./publish --self-contained true -f netcoreapp3.1
       working-directory: Wetcardboard_Utilities
     
   # Deploy
