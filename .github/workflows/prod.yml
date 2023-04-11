@@ -11,7 +11,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -22,15 +21,37 @@ jobs:
         dotnet-version: 6.0.x
 
 # Restore and build Web Frontend
+  # Restore
     - name: Restore dependencies (Web)
       run: dotnet restore
       working-directory: Wetcardboard_Utilities
-    - name: Build (Web)
+    
+  # Build
+    - name: Build (Web) - Debug
       run: dotnet build --no-restore
       working-directory: Wetcardboard_Utilities
+    - name: Build (Web) - Release
+      run: dotnet build --configuration Release --no-restore
+      working-directory: Wetcardboard_Utilities
+  
+  # Test
     - name: Test (Web)
       run: dotnet test --no-build --verbosity normal
       working-directory: Wetcardboard_Utilities
+    
+  # Publish
+    - name: Publish (Web)
+      run: dotnet publish --configuration Release --no-restore --output ./publish
+    
+  # Deploy
+    - name: FTP Deploy (Web)
+      uses: SamKirkland/FTP-Deploy-Action@4.3.4
+      with: 
+        server: ${{ secrets.PROD_FTP_SERVER }}
+        username: ${{ secrets.PROD_FTP_USERNAME }}
+        password: ${{ secrets.PROD_FTP_PASSWORD }}
+        server-dir: ${{ secrets.PROD_FTP_SERVER_DIR }}
+        local-dir: Wetcardboard_Utilities/
       
 # Restore and build Api Backend
     - name: Restore dependencies (Api)
