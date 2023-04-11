@@ -41,7 +41,7 @@ jobs:
     
   # Publish
     - name: Publish (Web)
-      run: dotnet publish --configuration Release --no-restore --output ./publish
+      run: dotnet publish --configuration Release --no-restore --output ./publish --self-contained true
       working-directory: Wetcardboard_Utilities
     
   # Deploy
@@ -52,7 +52,7 @@ jobs:
         username: ${{ secrets.PROD_FTP_USERNAME }}
         password: ${{ secrets.PROD_FTP_PASSWORD }}
         server-dir: ${{ secrets.PROD_FTP_SERVER_DIR }}
-        local-dir: Wetcardboard_Utilities/
+        local-dir: Wetcardboard_Utilities/publish/
       
 # Restore and build Api Backend
     - name: Restore dependencies (Api)
