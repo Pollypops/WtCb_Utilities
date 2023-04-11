@@ -70,16 +70,51 @@ jobs:
         server: ${{ secrets.PROD_FTP_SERVER }}
         username: ${{ secrets.PROD_FTP_USERNAME }}
         password: ${{ secrets.PROD_FTP_PASSWORD }}
-        server-dir: public_html/Utilities/Web/
-        local-dir: Wetcardboard_Utilities/publish/
+        server-dir: public_html/Utilities/Web/      # Must end in '/'
+        local-dir: Wetcardboard_Utilities/publish/  # Must end in '/'
       
 # Restore and build Api Backend
+  # Restore
     - name: Restore dependencies (Api)
       run: dotnet restore
       working-directory: Wetcardboard_Utilities_Api
-    - name: Build (Api)
+  
+  # Build
+    - name: Build (Api) - Debug
       run: dotnet build --no-restore
       working-directory: Wetcardboard_Utilities_Api
+      
+    - name: Build (Api) - Release
+      run: dotnet build --configuration Release --no-restore
+      working-directory: Wetcardboard_Utilities_Api
+  
+  # Test
     - name: Test (Api)
       run: dotnet test --no-build --verbosity normal
       working-directory: Wetcardboard_Utilities_Api
+  
+  # Publish
+    - name: Publish (Api)
+      run: dotnet publish --configuration Release --output ./publish --self-contained true -f net7.0 -r win-x86
+      working-directory: Wetcardboard_Utilities_Api
+  
+  # Secrets
+    - name: AppSettings Secrets (Api)
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: Wetcardboard_Utilities/publish/appsettings.json
+      env:
+        ConnectionStrings.wetcardboard_utilities_mysql: ${{ secrets.PROD_CONNECTIONSTRING_WETCARDBOARD_UTILITIES_MYSQL_API }}
+        Jwt.Issuer: ${{ secrets.PROD_JWT_ISSUER_API }}
+        Jwt.Audience: ${{ secrets.PROD_JWT_AUDIENCE_API }}
+        Jwt.Key: ${{ secrets.PROD_JWT_KEY_API }}
+  
+  # Deploy
+    - name: FTP Deploy (Api)
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.PROD_FTP_SERVER }}
+        username: ${{ secrets.PROD_FTP_USERNAME }}
+        password: ${{ secrets.PROD_FTP_PASSWORD }}
+        server-dir: public_html/Utilities/Api/          # Must end in '/'
+        local-dir: Wetcardboard_Utilities_Api/publish/  # Must end in '/'
