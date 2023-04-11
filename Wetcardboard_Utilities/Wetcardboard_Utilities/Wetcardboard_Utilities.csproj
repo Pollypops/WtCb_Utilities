@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>0873ef95-5845-4f37-9562-14180fcf3447</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.SessionStorage" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="7.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Wetcardboard_Authentication\Wetcardboard_Authentication.csproj" />
+    <ProjectReference Include="..\Wetcardboard_Database\Wetcardboard_Database.csproj" />
+    <ProjectReference Include="..\Wetcardboard_Utilities_Api_Services\Wetcardboard_Utilities_Api_Services.csproj" />
+    <ProjectReference Include="..\Wetcardboard_Utilities_Database\Wetcardboard_Utilities_Database.csproj" />
+  </ItemGroup>
+
+</Project>

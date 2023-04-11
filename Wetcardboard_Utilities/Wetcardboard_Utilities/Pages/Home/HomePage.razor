@@ -1,0 +1,53 @@
+﻿@page "/home"
+@attribute [Authorize(Roles = "Admin")]
+@attribute [Authorize(Roles = "User")]
+
+@using Blazored.SessionStorage;
+@using System.Text.Json;
+@inject ISessionStorageService sessionStorage;
+@inject IHttpClientFactory httpClientFactory;
+
+<PageTitle>Home</PageTitle>
+
+<AuthorizeView Roles="User">
+    <Authorized>
+        <p>User Role</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>Aint nobody been user roles</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <p>Ding dong diddeli damn. You're in it now'</p>
+
+        <div style="display: flex; flex-direction: column;">
+            <div style="background: blue; height: 30px; width: 30px; max-height: 30px; max-width: 30px;" @onclick="TestClick">TEST BTN</div>
+
+            <a style="margin-top: 20px;" href="https://localhost:7153/api/v1/AdLogin/id_token">id_token - TEST LINK</a>
+
+            <a style="margin-top: 20px" href="https://localhost:7153/api/v1/AdLogin/test">test - TEST LINK</a>
+
+            @*<p>@Bearer</p>*@
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <p>You don't have access to this page'</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private async Task TestClick()
+    {
+        var reqMsg = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7153/api/v1/AdLogin/test");
+
+        var http = httpClientFactory.CreateClient();
+        var respMsg = await http.SendAsync(reqMsg);
+        var respCntnt =  await respMsg.Content.ReadAsStringAsync();
+
+
+        var v = await http.GetAsync("https://localhost:7153/api/v1/AdLogin/test");
+        var vv = v.Content.ReadAsStringAsync().Result;
+    }
+}
