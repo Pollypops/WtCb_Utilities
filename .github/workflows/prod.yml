@@ -42,7 +42,7 @@ jobs:
     
   # Publish
     - name: Publish (Web)
-      run: dotnet publish --configuration Release --no-restore --output ./publish --self-contained true
+      run: dotnet publish --configuration Release --no-restore --output ./publish --self-contained true -r linux-x64
       working-directory: Wetcardboard_Utilities
     
   # Deploy
