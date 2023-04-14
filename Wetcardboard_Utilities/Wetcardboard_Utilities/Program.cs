@@ -27,7 +27,7 @@ Auth_DtModelProps_Azure_AD_OAuth2_Auth GetAzureAdAuthProps(ConfigurationManager 
     var codeVerifier = azureAdAuthSett.GetValue<string>("code_verifier");
     var grantType = azureAdAuthSett.GetValue<string>("grant_type");
     var noncePool = azureAdAuthSett.GetValue<string>("nonce_pool");
-    var redirectUri = azureAdAuthSett.GetValue<string>("redirect_uri");
+    var redirectUri = string.Empty; // azureAdAuthSett.GetValue<string>("redirect_uri");
     var responseMode = azureAdAuthSett.GetValue<string>("response_mode");
     var responseType = azureAdAuthSett.GetValue<string>("response_type");
     var scope = azureAdAuthSett.GetValue<string>("scope");
@@ -44,7 +44,7 @@ Auth_DtModelProps_Azure_AD_OAuth2_Auth GetAzureAdAuthProps(ConfigurationManager 
     var urlSignOutPostLogoutRedirectUri = azureAdAuthSett.GetValue<string>("url_signOut_postLogoutRedirectUri");
 
     if (string.IsNullOrEmpty(tenant) || string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(clientSecret_timeReg)
-        || string.IsNullOrEmpty(responseType) || string.IsNullOrEmpty(redirectUri) || string.IsNullOrEmpty(responseMode)
+        || string.IsNullOrEmpty(responseType) /*|| string.IsNullOrEmpty(redirectUri)*/ || string.IsNullOrEmpty(responseMode)
         || string.IsNullOrEmpty(scope) || string.IsNullOrEmpty(state) || string.IsNullOrEmpty(codeChallenge)
         || string.IsNullOrEmpty(codeChallengeMode) || string.IsNullOrEmpty(codeVerifier) || string.IsNullOrEmpty(grantType)
         || string.IsNullOrEmpty(noncePool) || string.IsNullOrEmpty(urlAuthCodePart1) || string.IsNullOrEmpty(urlAuthCodePart2)
