@@ -27,10 +27,6 @@ jobs:
       working-directory: Wetcardboard_Utilities
     
   # Build
-    - name: Build (Web) - Debug
-      run: dotnet build --no-restore
-      working-directory: Wetcardboard_Utilities
-      
     - name: Build (Web) - Release
       run: dotnet build --configuration Release --no-restore
       working-directory: Wetcardboard_Utilities
@@ -64,6 +60,15 @@ jobs:
         ApiService_BasePath: ${{ secrets.PROD_APISERVICEBASEPATH }}
     
   # Deploy
+    - name: FTP Deploy rename _app_offline.htm
+      shell: python
+      run: |
+        import ftplib
+        ftp = ftplib.FTP('${{ secrets.PROD_FTP_SERVER }}')
+        ftp.login('${{ secrets.PROD_FTP_USERNAME }}', '${{ secrets.PROD_FTP_PASSWORD }}')
+        ftp.rename('_app_offline.htm', 'app_offline.htm')
+        ftp.quit()
+  
     - name: FTP Deploy (Web)
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with: 
@@ -72,6 +77,15 @@ jobs:
         password: ${{ secrets.PROD_FTP_PASSWORD }}
         server-dir: public_html/Utilities/Web/      # Must end in '/'
         local-dir: Wetcardboard_Utilities/publish/  # Must end in '/'
+        
+    - name: FTP Deploy rename app_offline.htm
+      shell: python
+      run: |
+        import ftplib
+        ftp = ftplib.FTP('${{ secrets.PROD_FTP_SERVER }}')
+        ftp.login('${{ secrets.PROD_FTP_USERNAME }}', '${{ secrets.PROD_FTP_PASSWORD }}')
+        ftp.rename('app_offline.htm', '_app_offline.htm')
+        ftp.quit()
       
 # Restore and build Api Backend
   # Restore
@@ -80,10 +94,6 @@ jobs:
       working-directory: Wetcardboard_Utilities_Api
   
   # Build
-    - name: Build (Api) - Debug
-      run: dotnet build --no-restore
-      working-directory: Wetcardboard_Utilities_Api
-      
     - name: Build (Api) - Release
       run: dotnet build --configuration Release --no-restore
       working-directory: Wetcardboard_Utilities_Api
