@@ -60,14 +60,14 @@ jobs:
         ApiService_BasePath: ${{ secrets.PROD_APISERVICEBASEPATH }}
     
   # Deploy
-    - name: FTP Deploy rename _app_offline.htm
-      shell: python
-      run: |
-        import ftplib
-        ftp = ftplib.FTP('${{ secrets.PROD_FTP_SERVER }}')
-        ftp.login('${{ secrets.PROD_FTP_USERNAME }}', '${{ secrets.PROD_FTP_PASSWORD }}')
-        ftp.rename('_app_offline.htm', 'app_offline.htm')
-        ftp.quit()
+#    - name: FTP Deploy rename _app_offline.htm
+#      shell: python
+#      run: |
+#        import ftplib
+#        ftp = ftplib.FTP('${{ secrets.PROD_FTP_SERVER }}')
+#        ftp.login('${{ secrets.PROD_FTP_USERNAME }}', '${{ secrets.PROD_FTP_PASSWORD }}')
+#        ftp.rename('_app_offline.htm', 'app_offline.htm')
+#        ftp.quit()
   
     - name: FTP Deploy (Web)
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -78,15 +78,15 @@ jobs:
         server-dir: public_html/Utilities/Web/      # Must end in '/'
         local-dir: Wetcardboard_Utilities/publish/  # Must end in '/'
         
-    - name: FTP Deploy rename app_offline.htm
-      shell: python
-      run: |
-        import ftplib
-        ftp = ftplib.FTP('${{ secrets.PROD_FTP_SERVER }}')
-        ftp.login('${{ secrets.PROD_FTP_USERNAME }}', '${{ secrets.PROD_FTP_PASSWORD }}')
-        ftp.cwd('/public_html/Utilities/Web')
-        ftp.rename('app_offline.htm', '_app_offline.htm')
-        ftp.quit()
+#    - name: FTP Deploy rename app_offline.htm
+#      shell: python
+#      run: |
+#        import ftplib
+#        ftp = ftplib.FTP('${{ secrets.PROD_FTP_SERVER }}')
+#        ftp.login('${{ secrets.PROD_FTP_USERNAME }}', '${{ secrets.PROD_FTP_PASSWORD }}')
+#        ftp.cwd('/public_html/Utilities/Web')
+#        ftp.rename('app_offline.htm', '_app_offline.htm')
+#        ftp.quit()
       
 # Restore and build Api Backend
   # Restore
