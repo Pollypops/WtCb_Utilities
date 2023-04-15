@@ -60,7 +60,7 @@ jobs:
         ApiService_BasePath: ${{ secrets.PROD_APISERVICEBASEPATH }}
     
   # Deploy
-    - name: Take site offline
+    - name: Take Web offline
       shell: python
       run: |
         import ftplib
@@ -82,6 +82,16 @@ jobs:
         password: ${{ secrets.PROD_FTP_PASSWORD }}
         server-dir: public_html/Utilities/Web/      # Must end in '/'
         local-dir: Wetcardboard_Utilities/publish/  # Must end in '/'
+        
+    - name: Take Web online
+      shell: python
+      run: |
+        import ftplib
+        ftp = ftplib.FTP('${{ secrets.PROD_FTP_SERVER }}')
+        ftp.login('${{ secrets.PROD_FTP_USERNAME }}', '${{ secrets.PROD_FTP_PASSWORD }}')
+        ftp.cwd('/public_html/Utilities/Web')
+        ftp.rename('app_offline.htm', '_app_offline.htm')
+        ftp.quit()
       
 # Restore and build Api Backend
   # Restore
@@ -116,6 +126,20 @@ jobs:
         Jwt.Key: ${{ secrets.PROD_JWT_KEY_API }}
   
   # Deploy
+    - name: Take Api offline
+      shell: python
+      run: |
+        import ftplib
+        ftp = ftplib.FTP('${{ secrets.PROD_FTP_SERVER }}')
+        ftp.login('${{ secrets.PROD_FTP_USERNAME }}', '${{ secrets.PROD_FTP_PASSWORD }}')
+        ftp.cwd('/public_html/Utilities/Api')
+        ftp.rename('_app_offline.htm', 'app_offline.htm')
+        ftp.quit()
+    
+    - name: Sleep 15s
+      run: sleep 15s
+      shell: bash
+      
     - name: FTP Deploy (Api)
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
@@ -124,3 +148,13 @@ jobs:
         password: ${{ secrets.PROD_FTP_PASSWORD }}
         server-dir: public_html/Utilities/Api/          # Must end in '/'
         local-dir: Wetcardboard_Utilities_Api/publish/  # Must end in '/'
+        
+    - name: Take Api online
+      shell: python
+      run: |
+        import ftplib
+        ftp = ftplib.FTP('${{ secrets.PROD_FTP_SERVER }}')
+        ftp.login('${{ secrets.PROD_FTP_USERNAME }}', '${{ secrets.PROD_FTP_PASSWORD }}')
+        ftp.cwd('/public_html/Utilities/Api')
+        ftp.rename('app_offline.htm', '_app_offline.htm')
+        ftp.quit()
