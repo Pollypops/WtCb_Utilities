@@ -33,15 +33,15 @@ namespace Wetcardboard_Shared.Logging
         {
             var parameters = new List<SqlParameterWithValue>
             {
-                new SqlParameterWithValue("_systemIdentifier", _systemProps.SystemIdentifier),
+                new SqlParameterWithValue("_systemIdentifier", DatabaseType.VarChar, _systemProps.SystemIdentifier),
                 new SqlParameterWithValue("_userId", DatabaseType.Int, userId),
-                new SqlParameterWithValue("_message", DatabaseType.VarChar, message),
+                new SqlParameterWithValue("_message", DatabaseType.MediumText, message),
                 new SqlParameterWithValue("_severity", DatabaseType.VarChar, logLevel.ToString()),
                 new SqlParameterWithValue("_loggingFile", DatabaseType.VarChar, callerFilePath),
                 new SqlParameterWithValue("_loggingMember", DatabaseType.VarChar, callerMemberName),
                 new SqlParameterWithValue("_loggingLine", DatabaseType.Int, callerLineNumber)
             };
-            _dbConn.ExecuteNonQuery(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_LOGS_ADD, parameters);
+            _dbConn.ExecuteStoredProcedureNonQuery(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_LOGS_ADD, parameters);
         }
         #endregion \ IWtCbLogger Implementation
     }

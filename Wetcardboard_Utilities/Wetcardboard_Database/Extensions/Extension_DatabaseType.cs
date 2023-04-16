@@ -26,6 +26,7 @@ namespace Wetcardboard_Database.Extensions
                 case DatabaseType.VarChar: res = MySqlDbType.VarChar; break;
                 case DatabaseType.Date: res = MySqlDbType.Date; break;
                 case DatabaseType.Time: res = MySqlDbType.Time; break;
+                case DatabaseType.MediumText: res = MySqlDbType.MediumText; break;
 
                 default: throw new NotImplementedException($"No implementation for: '{sqlDbType}'");
             }
