@@ -139,7 +139,7 @@ namespace Wetcardboard_Utilities.Controllers
                     ExpiresUtc = DateTime.UtcNow.AddHours(5)
                 });
 
-            var res = LocalRedirect("/home");
+            var res = LocalRedirect("/Utilities/Web/home");
             return res;
         }
 
@@ -149,7 +149,7 @@ namespace Wetcardboard_Utilities.Controllers
         public async Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync();
-            return LocalRedirect("/index");
+            return LocalRedirect("/Utilities/Web/index");
         }
 
         [HttpGet]
