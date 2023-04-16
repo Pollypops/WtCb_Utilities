@@ -102,7 +102,7 @@ builder.Services.AddSingleton<IDbConn_Wetcardboard_Utilities>(GetDbConn_WcUtil(c
 
 builder.Services.AddSingleton(CreateJwtFunctions(conf));
 builder.Services.AddSingleton(CreateSystemProps(conf));
-builder.Services.AddSingleton<IWtCbLogger>();
+builder.Services.AddSingleton<IWtCbLogger, WtCbLogger_Db>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 AddAuthentication(builder, conf);
