@@ -6,7 +6,7 @@ namespace Wetcardboard_Database.Parameters
     public class SqlParameterWithValue
     {
         #region Fields & Properties
-        public object Value { get; set; }
+        public object? Value { get; set; }
         public DatabaseType Type { get; set; }
         public string Name { get; set; }
         #endregion \ Fields & Properties
@@ -19,7 +19,7 @@ namespace Wetcardboard_Database.Parameters
             Type = value.ConvertToDatabaseType();
             Value = value;
         }
-        public SqlParameterWithValue(string name, DatabaseType type, object value)
+        public SqlParameterWithValue(string name, DatabaseType type, object? value)
         {
             Name = name;
             Type = type;

@@ -6,6 +6,7 @@ using Wetcardboard_Shared.Security.Jwt;
 using Wetcardboard_Utilities_Api.Services.Implementations;
 using Wetcardboard_Utilities_Api.Services.Interfaces;
 using Wetcardboard_Utilities_Database.Connector;
+using Wetcardboard_Utilities_Models.System;
 
 IJwtFunctions CreateJwtFunctions(ConfigurationManager conf)
 {
@@ -18,10 +19,22 @@ IJwtFunctions CreateJwtFunctions(ConfigurationManager conf)
         || string.IsNullOrEmpty(audience)
         || string.IsNullOrEmpty(key))
     {
-        throw new ArgumentException("One or more values in appsetting were not provided");
+        throw new ArgumentException("Jwt: One or more values in appsetting were not provided");
     }
 
     var res = new JwtFunctions(issuer, audience, key);
+    return res;
+}
+Wetcardboard_Utilities_System_Props CreateSystemProps(ConfigurationManager conf)
+{
+    var systemIdentifier = conf.GetValue<string>("SystemIdentifier");
+
+    if (string.IsNullOrEmpty(systemIdentifier))
+    {
+        throw new ArgumentException("SystemProps: One or more values for in appsetting were not provided");
+    }
+
+    var res = new Wetcardboard_Utilities_System_Props(systemIdentifier);
     return res;
 }
 DbConn_Wetcardboard_Utilities_MySql GetDbConn_WcUtil(ConfigurationManager conf)
@@ -84,6 +97,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton(CreateJwtFunctions(conf));
+builder.Services.AddSingleton(CreateSystemProps(conf));
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 AddAuthentication(builder, conf);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using Wetcardboard_Shared.Logging;
 using Wetcardboard_Shared.Security.Jwt;
 using Wetcardboard_Utilities_Api.Services.Interfaces;
 using Wetcardboard_Utilities_Database.Connector;
@@ -9,18 +10,21 @@ namespace Wetcardboard_Utilities_Api.Services.Implementations
     public class TokenService : ITokenService
     {
         #region Fields & Properties
-        private IDbConn_Wetcardboard_Utilities _dbConn_Wetcardboard_Utilities;
-        private IJwtFunctions _jwtFunctions;
+        private readonly IDbConn_Wetcardboard_Utilities _dbConn_Wetcardboard_Utilities;
+        private readonly IJwtFunctions _jwtFunctions;
+        private readonly IWtCbLogger _logger;
         #endregion \ Fields & Properties
 
 
         #region Constructor
         public TokenService(
             IDbConn_Wetcardboard_Utilities dbConn_Wetcardboard_Utilities,
-            IJwtFunctions jwtFunctions)
+            IJwtFunctions jwtFunctions,
+            IWtCbLogger logger)
         {
             _dbConn_Wetcardboard_Utilities = dbConn_Wetcardboard_Utilities;
             _jwtFunctions = jwtFunctions;
+            _logger = logger;
         }
         #endregion \ Constructor
 
@@ -32,7 +36,7 @@ namespace Wetcardboard_Utilities_Api.Services.Implementations
             var user = _dbConn_Wetcardboard_Utilities.GetUserByGuid(userGuid);
             if (user is null)
             {
-                // TODO: Implement Logging
+                _logger.Log("No user found.", LogLevel.Error);
                 return false;
             }
 
