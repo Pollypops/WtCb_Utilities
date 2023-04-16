@@ -47,6 +47,7 @@ namespace Wetcardboard_Utilities_Api_Services.Implementations
         public async Task<bool> CreateUserJwtTokenAsync(string userGuid)
         {
             var url = $"{ApiTokenBasePath}/{userGuid}";
+            _logger.Log(url, LogLevel.Information);
 
             var reqMsg = new HttpRequestMessage(HttpMethod.Put, url);
 
