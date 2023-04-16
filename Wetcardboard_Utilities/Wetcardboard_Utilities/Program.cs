@@ -174,7 +174,7 @@ builder.Services.AddSingleton(CreateSystemProps(conf));
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<IHttpFunctions, HttpFunctions>();
-builder.Services.AddSingleton<IWtCbLogger>();
+builder.Services.AddSingleton<IWtCbLogger, WtCbLogger_Db>();
 builder.Services.AddBlazoredSessionStorage();
 
 // Db Services
