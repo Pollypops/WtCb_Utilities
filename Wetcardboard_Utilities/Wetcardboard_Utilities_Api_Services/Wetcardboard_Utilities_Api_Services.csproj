@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Wetcardboard_Shared\Wetcardboard_Shared.csproj" />
     <ProjectReference Include="..\Wetcardboard_Utilities_Models\Wetcardboard_Utilities_Models.csproj" />
   </ItemGroup>
 
