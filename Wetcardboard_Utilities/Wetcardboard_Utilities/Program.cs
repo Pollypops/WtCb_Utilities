@@ -5,6 +5,7 @@ using Wetcardboard_Authentication.Authenticator;
 using Wetcardboard_Authentication.Authenticator.Azure_AD_OAuth2;
 using Wetcardboard_Database.Connector;
 using Wetcardboard_Shared.Http;
+using Wetcardboard_Shared.Logging;
 using Wetcardboard_Shared.Security.Jwt;
 using Wetcardboard_Utilities.Database.Implementations;
 using Wetcardboard_Utilities.Database.Interfaces;
@@ -12,6 +13,7 @@ using Wetcardboard_Utilities_Api_Services.Implementations;
 using Wetcardboard_Utilities_Api_Services.Interfaces;
 using Wetcardboard_Utilities_Database.Connector;
 using Wetcardboard_Utilities_Models.Front_End;
+using Wetcardboard_Utilities_Models.System;
 
 Auth_DtModelProps_Azure_AD_OAuth2_Auth GetAzureAdAuthProps(ConfigurationManager conf)
 {
@@ -139,7 +141,18 @@ Wetcardboard_Utilities_Fe_Appsettings CreateFeAppsettings(ConfigurationManager c
     };
     return res;
 }
+Wetcardboard_Utilities_System_Props CreateSystemProps(ConfigurationManager conf)
+{
+    var systemIdentifier = conf.GetValue<string>("SystemIdentifier");
 
+    if (string.IsNullOrEmpty(systemIdentifier))
+    {
+        throw new ArgumentException("SystemProps: One or more values for in appsetting were not provided");
+    }
+
+    var res = new Wetcardboard_Utilities_System_Props(systemIdentifier);
+    return res;
+}
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -157,9 +170,11 @@ builder.Services.AddSingleton(GetAzureAdAuthProps(conf));
 builder.Services.AddScoped<IAuthenticator, Auth_Azure_AD_OAuth2>();
 builder.Services.AddSingleton(CreateJwtFunctions(conf));
 builder.Services.AddSingleton(CreateFeAppsettings(conf));
+builder.Services.AddSingleton(CreateSystemProps(conf));
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<IHttpFunctions, HttpFunctions>();
+builder.Services.AddSingleton<IWtCbLogger>();
 builder.Services.AddBlazoredSessionStorage();
 
 // Db Services
