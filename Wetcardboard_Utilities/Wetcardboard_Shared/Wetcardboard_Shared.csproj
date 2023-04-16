@@ -12,4 +12,9 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.26.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Wetcardboard_Database\Wetcardboard_Database.csproj" />
+    <ProjectReference Include="..\Wetcardboard_Utilities_Models\Wetcardboard_Utilities_Models.csproj" />
+  </ItemGroup>
+
 </Project>
