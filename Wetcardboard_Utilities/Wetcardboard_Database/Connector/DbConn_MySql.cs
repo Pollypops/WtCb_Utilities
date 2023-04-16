@@ -47,6 +47,7 @@ namespace Wetcardboard_Database.Connector
             catch (Exception)
             {
                 // TODO: Implement error handling!
+                throw;
                 res = -1;
             }
 
