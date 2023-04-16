@@ -102,7 +102,7 @@ IJwtFunctions CreateJwtFunctions(ConfigurationManager conf)
     var res = new JwtFunctions(issuer, audience, key);
     return res;
 }
-DbConn_Wetcardboard_Utilities_MySql GetDbConn_WcUtil(ConfigurationManager conf)
+IDbConn CreateIDbConn(ConfigurationManager conf)
 {
     var connStr_WcUtil_MySql = conf.GetConnectionString("wetcardboard_utilities_mysql");
     if (string.IsNullOrEmpty(connStr_WcUtil_MySql))
@@ -112,8 +112,7 @@ DbConn_Wetcardboard_Utilities_MySql GetDbConn_WcUtil(ConfigurationManager conf)
 
     var dbConn_MySql = new DbConn_MySql();
     dbConn_MySql.SetConnectionString(connStr_WcUtil_MySql);
-    var dbConn_WcUtil = new DbConn_Wetcardboard_Utilities_MySql(dbConn_MySql);
-    return dbConn_WcUtil;
+    return dbConn_MySql;
 }
 void AddAuthentication(WebApplicationBuilder builder, ConfigurationManager conf)
 {
@@ -177,7 +176,8 @@ builder.Services.AddSingleton<IHttpFunctions, HttpFunctions>();
 builder.Services.AddBlazoredSessionStorage();
 
 // Db Services
-builder.Services.AddSingleton<IDbConn_Wetcardboard_Utilities>(GetDbConn_WcUtil(conf));
+builder.Services.AddSingleton(CreateIDbConn(conf));
+builder.Services.AddSingleton<IDbConn_Wetcardboard_Utilities>();
 builder.Services.AddSingleton<IDbConn_Wetcardboard_Utilities_Fe, DbConn_Wetcardboard_Utilities_Fe>();
 
 builder.Services.AddSingleton<IWtCbLogger, WtCbLogger_Db>();
