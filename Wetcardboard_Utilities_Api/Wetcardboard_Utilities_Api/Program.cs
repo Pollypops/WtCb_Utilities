@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Wetcardboard_Database.Connector;
+using Wetcardboard_Shared.Logging;
 using Wetcardboard_Shared.Security.Jwt;
 using Wetcardboard_Utilities_Api.Services.Implementations;
 using Wetcardboard_Utilities_Api.Services.Interfaces;
@@ -96,15 +97,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Db Services
+builder.Services.AddSingleton<IDbConn_Wetcardboard_Utilities>(GetDbConn_WcUtil(conf));
+
 builder.Services.AddSingleton(CreateJwtFunctions(conf));
 builder.Services.AddSingleton(CreateSystemProps(conf));
+builder.Services.AddSingleton<IWtCbLogger>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 AddAuthentication(builder, conf);
 builder.Services.AddAuthorization();
-
-// Db Services
-builder.Services.AddSingleton<IDbConn_Wetcardboard_Utilities>(GetDbConn_WcUtil(conf));
 
 var app = builder.Build();
 
