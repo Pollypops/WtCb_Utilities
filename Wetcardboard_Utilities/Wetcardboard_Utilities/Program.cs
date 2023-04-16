@@ -177,7 +177,7 @@ builder.Services.AddBlazoredSessionStorage();
 
 // Db Services
 builder.Services.AddSingleton(CreateIDbConn(conf));
-builder.Services.AddSingleton<IDbConn_Wetcardboard_Utilities>();
+builder.Services.AddSingleton<IDbConn_Wetcardboard_Utilities, DbConn_Wetcardboard_Utilities_MySql>();
 builder.Services.AddSingleton<IDbConn_Wetcardboard_Utilities_Fe, DbConn_Wetcardboard_Utilities_Fe>();
 
 builder.Services.AddSingleton<IWtCbLogger, WtCbLogger_Db>();
