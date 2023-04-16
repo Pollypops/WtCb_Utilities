@@ -118,7 +118,7 @@ jobs:
     - name: AppSettings Secrets (Api)
       uses: microsoft/variable-substitution@v1
       with:
-        files: Wetcardboard_Utilities/publish/appsettings.json
+        files: Wetcardboard_Utilities_Api/publish/appsettings.json
       env:
         ConnectionStrings.wetcardboard_utilities_mysql: ${{ secrets.PROD_CONNECTIONSTRING_WETCARDBOARD_UTILITIES_MYSQL_API }}
         Jwt.Issuer: ${{ secrets.PROD_JWT_ISSUER_API }}
