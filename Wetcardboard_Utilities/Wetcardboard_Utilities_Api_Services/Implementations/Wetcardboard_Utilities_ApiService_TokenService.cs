@@ -11,7 +11,6 @@ namespace Wetcardboard_Utilities_Api_Services.Implementations
         #region Fields & Properties
         #region Fields
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ILogger _logger;
 
         private const string _apiTokenPath = "Token";
         #endregion \ Fields
@@ -31,12 +30,10 @@ namespace Wetcardboard_Utilities_Api_Services.Implementations
         #region Constructor
         public Wetcardboard_Utilities_ApiService_TokenService(
                 IHttpClientFactory httpClientFactory,
-                Wetcardboard_Utilities_Fe_Appsettings appSettings,
-                ILogger logger
+                Wetcardboard_Utilities_Fe_Appsettings appSettings
             ) : base(appSettings)
         {
             _httpClientFactory = httpClientFactory;
-            _logger = logger;
         }
         #endregion \ Constructor
 
