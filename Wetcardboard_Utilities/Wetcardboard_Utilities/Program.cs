@@ -174,12 +174,13 @@ builder.Services.AddSingleton(CreateSystemProps(conf));
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<IHttpFunctions, HttpFunctions>();
-builder.Services.AddSingleton<IWtCbLogger, WtCbLogger_Db>();
 builder.Services.AddBlazoredSessionStorage();
 
 // Db Services
 builder.Services.AddSingleton<IDbConn_Wetcardboard_Utilities>(GetDbConn_WcUtil(conf));
 builder.Services.AddSingleton<IDbConn_Wetcardboard_Utilities_Fe, DbConn_Wetcardboard_Utilities_Fe>();
+
+builder.Services.AddSingleton<IWtCbLogger, WtCbLogger_Db>();
 builder.Services.AddSingleton<IWetcardboard_Utilities_ApiService_TokenService, Wetcardboard_Utilities_ApiService_TokenService>();
 
 builder.Services.AddControllers();
