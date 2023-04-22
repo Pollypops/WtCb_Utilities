@@ -1,20 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.Extensions.Primitives;
 using System.Security.Claims;
-using System.Security.Principal;
 using Wetcardboard_Authentication.Authenticator;
 using Wetcardboard_Authentication.Authenticator.Azure_AD_OAuth2;
+using Wetcardboard_Shared.Navigation;
 using Wetcardboard_Shared.Security.Jwt;
 using Wetcardboard_Utilities.Database.Interfaces;
 using Wetcardboard_Utilities_Api_Services.Interfaces;
-using Wetcardboard_Utilities_Database.Connector;
-using Wetcardboard_Utilities_Models.Database;
 using Wetcardboard_Utilities_Models.Front_End;
 
 namespace Wetcardboard_Utilities.Controllers
@@ -30,6 +24,7 @@ namespace Wetcardboard_Utilities.Controllers
         private IDbConn_Wetcardboard_Utilities_Fe _dbConn;
         private IJwtFunctions _jwtFunctions;
         private IWetcardboard_Utilities_ApiService_TokenService _tokenService;
+        private UrlFactory _urlFactory;
         #endregion \ Fields
 
         #region Properties
@@ -50,13 +45,15 @@ namespace Wetcardboard_Utilities.Controllers
             IAuthenticator authenticator,
             IDbConn_Wetcardboard_Utilities_Fe dbConn,
             IJwtFunctions jwtFunctions,
-            IWetcardboard_Utilities_ApiService_TokenService tokenService
+            IWetcardboard_Utilities_ApiService_TokenService tokenService,
+            UrlFactory urlFactory
             )
         {
             _authenticator = authenticator;
             _dbConn = dbConn;
             _jwtFunctions = jwtFunctions;
             _tokenService = tokenService;
+            _urlFactory = urlFactory;
         }
         #endregion \ Constructor
 
@@ -104,11 +101,6 @@ namespace Wetcardboard_Utilities.Controllers
                 return NotFound("User not registered in system.");
             }
 
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Role, user.UserRole)
-            };
-
             var tokenCreated = await _tokenService.CreateUserJwtTokenAsync(user.Guid);
             if (!tokenCreated)
             {
@@ -139,7 +131,8 @@ namespace Wetcardboard_Utilities.Controllers
                     ExpiresUtc = DateTime.UtcNow.AddHours(5)
                 });
 
-            var res = LocalRedirect("/Utilities/Web/home");
+            var resPath = _urlFactory.CreateUrl_Relative("home");
+            var res = LocalRedirect(resPath);
             return res;
         }
 
@@ -149,7 +142,10 @@ namespace Wetcardboard_Utilities.Controllers
         public async Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync();
-            return LocalRedirect("/Utilities/Web/index");
+
+            var resPath = _urlFactory.CreateUrl_Relative("/");
+            var res = LocalRedirect(resPath);
+            return res;
         }
 
         [HttpGet]
@@ -160,7 +156,7 @@ namespace Wetcardboard_Utilities.Controllers
             var v = this.User;
             return Ok("bonk");
         }
-        #endregion \ Endpoints
+#endregion \ Endpoints
 
         [HttpGet]
         [Authorize(Roles = "Admin")]

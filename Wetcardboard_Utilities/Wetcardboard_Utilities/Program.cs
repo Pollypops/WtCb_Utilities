@@ -6,6 +6,7 @@ using Wetcardboard_Authentication.Authenticator.Azure_AD_OAuth2;
 using Wetcardboard_Database.Connector;
 using Wetcardboard_Shared.Http;
 using Wetcardboard_Shared.Logging;
+using Wetcardboard_Shared.Navigation;
 using Wetcardboard_Shared.Security.Jwt;
 using Wetcardboard_Utilities.Database.Implementations;
 using Wetcardboard_Utilities.Database.Interfaces;
@@ -152,6 +153,21 @@ Wetcardboard_Utilities_System_Props CreateSystemProps(ConfigurationManager conf)
     var res = new Wetcardboard_Utilities_System_Props(systemIdentifier);
     return res;
 }
+UrlFactory CreateUrlFactory(ConfigurationManager conf)
+{
+    var urlsConf = conf.GetSection("Urls");
+
+    var absoluteUrlPath = urlsConf.GetValue<string>("BaseAbsoluteFullUrl");
+    var relativeUrlPath = urlsConf.GetValue<string>("BaseRelativeFullUrl");
+    if (string.IsNullOrEmpty(absoluteUrlPath) ||
+        string.IsNullOrEmpty(relativeUrlPath))
+    {
+        throw new ArgumentException("UrlFactory: One or more value in appsetting were not provided or found");
+    }
+
+    var res = new UrlFactory(absoluteUrlPath, relativeUrlPath);
+    return res;
+}
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -165,6 +181,8 @@ builder.Services.AddHttpClient().AddHeaderPropagation(options =>
 {
     options.Headers.Add("Cookie");
 });
+
+builder.Services.AddSingleton(CreateUrlFactory(conf));
 builder.Services.AddSingleton(GetAzureAdAuthProps(conf));
 builder.Services.AddScoped<IAuthenticator, Auth_Azure_AD_OAuth2>();
 builder.Services.AddSingleton(CreateJwtFunctions(conf));
