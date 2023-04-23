@@ -1,0 +1,18 @@
+﻿@page "/calendar"
+@attribute [Authorize(Roles = "Admin")]
+@attribute [Authorize(Roles = "User")]
+
+<h3>Calendar</h3>
+<p>@CurrentDateString</p>
+
+
+@code {
+    private DateTime _currentTime = DateTime.Now;
+    private string CurrentDateString
+    {
+        get
+        {
+            return $"{_currentTime:yyyy-MM-dd hh:mm:Ss}";
+        }
+    }
+}
