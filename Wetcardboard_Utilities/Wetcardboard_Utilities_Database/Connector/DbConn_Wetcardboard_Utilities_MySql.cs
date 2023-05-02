@@ -23,6 +23,66 @@ namespace Wetcardboard_Utilities_Database.Connector
 
         #region Interface Implementations
         #region IDbConn_Wetcardboard_Utilities Implementation
+        #region Localization Countries
+        public Wetcardboard_Utilities_LocalizationCountry? GetCountryById(int id)
+        {
+            var parameters = new List<SqlParameterWithValue> 
+            {
+                new SqlParameterWithValue("_id", id)
+            };
+            var dbRes = DbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETLOCALIZATIONCOUNTRYBYID, parameters);
+            if (dbRes is null || dbRes.Tables.Count == 0)
+            {
+                return null;
+            }
+            return DbHelper.GetSingleObjectFromDataSet<Wetcardboard_Utilities_LocalizationCountry>(dbRes);
+        }
+        #endregion \ Localization Countries
+
+
+        #region Localization
+        public IEnumerable<Wetcardboard_Utilities_LocalizationCountry> GetLocalizationCountries()
+        {
+            var res = new List<Wetcardboard_Utilities_LocalizationCountry>();
+
+            var dbRes = DbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETLOCALIZATIONCOUNTRIES);
+            if (dbRes is null || dbRes.Tables.Count == 0)
+            {
+                return res;
+            }
+
+            var rows = DbConn.GetDataRows(dbRes, 0);
+            foreach (var row in rows)
+            {
+                var country = Wetcardboard_Utilities_LocalizationCountry.CreateFromDataRow(row) as Wetcardboard_Utilities_LocalizationCountry;
+                if (country is null)
+                {
+                    throw new ArgumentNullException(nameof(country));
+                }
+                res.Add(country);
+            }
+
+            return res;
+        }
+        public Wetcardboard_Utilities_LocalizationCountry? GetLocalizationCountryById(int id)
+        {
+            var parameters = new List<SqlParameterWithValue>
+            {
+                new SqlParameterWithValue("_id", id)
+            };
+
+            var dbRes = DbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETLOCALIZATIONCOUNTRYBYID, parameters);
+            if (dbRes is null || dbRes.Tables.Count == 0)
+            {
+                return null;
+            }
+
+            var res = DbHelper.GetSingleObjectFromDataSet<Wetcardboard_Utilities_LocalizationCountry>(dbRes);
+            return res;
+        }
+        #endregion \ Localization
+
+
         #region Tokens
         public bool AddUserToken(int userId, string token, DateTime expires)
         {

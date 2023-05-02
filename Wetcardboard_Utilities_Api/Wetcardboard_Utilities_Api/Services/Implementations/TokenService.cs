@@ -7,12 +7,12 @@ using Wetcardboard_Utilities_Database.Connector;
 
 namespace Wetcardboard_Utilities_Api.Services.Implementations
 {
-    public class TokenService : ITokenService
+    public class TokenService : ServiceBase, ITokenService
     {
         #region Fields & Properties
-        private readonly IDbConn_Wetcardboard_Utilities _dbConn_Wetcardboard_Utilities;
+        #region Fields
         private readonly IJwtFunctions _jwtFunctions;
-        private readonly IWtCbLogger _logger;
+        #endregion \ Fields
         #endregion \ Fields & Properties
 
 
@@ -20,11 +20,10 @@ namespace Wetcardboard_Utilities_Api.Services.Implementations
         public TokenService(
             IDbConn_Wetcardboard_Utilities dbConn_Wetcardboard_Utilities,
             IJwtFunctions jwtFunctions,
-            IWtCbLogger logger)
+            IWtCbLogger logger
+            ) : base(dbConn_Wetcardboard_Utilities, logger)
         {
-            _dbConn_Wetcardboard_Utilities = dbConn_Wetcardboard_Utilities;
             _jwtFunctions = jwtFunctions;
-            _logger = logger;
         }
         #endregion \ Constructor
 
@@ -36,7 +35,7 @@ namespace Wetcardboard_Utilities_Api.Services.Implementations
             var user = _dbConn_Wetcardboard_Utilities.GetUserByGuid(userGuid);
             if (user is null)
             {
-                _logger.Log("No user found.", LogLevel.Error);
+                _wtCbLogger.Log("No user found.", LogLevel.Error);
                 return false;
             }
 

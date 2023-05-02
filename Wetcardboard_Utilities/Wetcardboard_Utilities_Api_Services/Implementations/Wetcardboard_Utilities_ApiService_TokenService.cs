@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using System.Net;
 using Wetcardboard_Shared.Logging;
 using Wetcardboard_Utilities_Api_Services.Interfaces;
 using Wetcardboard_Utilities_Models.Front_End;
@@ -10,10 +12,7 @@ namespace Wetcardboard_Utilities_Api_Services.Implementations
         IWetcardboard_Utilities_ApiService_TokenService
     {
         #region Fields & Properties
-        #region Fields
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IWtCbLogger _logger;
-
+        #region Fields 
         private const string _apiTokenPath = "Token";
         #endregion \ Fields
 
@@ -32,13 +31,10 @@ namespace Wetcardboard_Utilities_Api_Services.Implementations
         #region Constructor
         public Wetcardboard_Utilities_ApiService_TokenService(
                 IHttpClientFactory httpClientFactory,
+                IHttpContextAccessor httpContextAccessor,
                 IWtCbLogger logger,
                 Wetcardboard_Utilities_Fe_Appsettings appSettings
-            ) : base(appSettings)
-        {
-            _httpClientFactory = httpClientFactory;
-            _logger = logger;
-        }
+            ) : base(httpClientFactory, httpContextAccessor, logger, appSettings) { }
         #endregion \ Constructor
 
 
@@ -52,7 +48,7 @@ namespace Wetcardboard_Utilities_Api_Services.Implementations
 
             var http = _httpClientFactory.CreateClient();
             var respMsg = await http.SendAsync(reqMsg);
-            if (respMsg.StatusCode != System.Net.HttpStatusCode.OK)
+            if (respMsg.StatusCode != HttpStatusCode.OK)
             {
                 var logMsg = $"Error creating JwtToken - Backend request responded with error code: {respMsg.StatusCode}, response message: {respMsg.RequestMessage}";
                 _logger.Log(logMsg, LogLevel.Error);

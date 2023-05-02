@@ -182,6 +182,8 @@ builder.Services.AddHttpClient().AddHeaderPropagation(options =>
     options.Headers.Add("Cookie");
 });
 
+builder.Services.AddLocalization();
+
 builder.Services.AddSingleton(CreateUrlFactory(conf));
 builder.Services.AddSingleton(GetAzureAdAuthProps(conf));
 builder.Services.AddScoped<IAuthenticator, Auth_Azure_AD_OAuth2>();
@@ -199,6 +201,7 @@ builder.Services.AddSingleton<IDbConn_Wetcardboard_Utilities, DbConn_Wetcardboar
 builder.Services.AddSingleton<IDbConn_Wetcardboard_Utilities_Fe, DbConn_Wetcardboard_Utilities_Fe>();
 
 builder.Services.AddSingleton<IWtCbLogger, WtCbLogger_Db>();
+builder.Services.AddSingleton<IWetcardboard_Utilities_ApiService_LocalizationService, Wetcardboard_Utilities_ApiService_LocalizationService>();
 builder.Services.AddSingleton<IWetcardboard_Utilities_ApiService_TokenService, Wetcardboard_Utilities_ApiService_TokenService>();
 
 builder.Services.AddControllers();

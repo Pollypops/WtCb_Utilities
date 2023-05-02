@@ -9,9 +9,11 @@ namespace Wetcardboard_Utilities_Api.Controllers
     [Route("api/v1/[controller]")]
     public class TokenController : Controller
     {
-        #region Properties
+        #region Fields & Properties
+        #region Fields
         private ITokenService _tokenService;
-        #endregion \ Properties
+        #endregion \ Fields
+        #endregion \ Fields & Properties
 
 
         #region Constructor

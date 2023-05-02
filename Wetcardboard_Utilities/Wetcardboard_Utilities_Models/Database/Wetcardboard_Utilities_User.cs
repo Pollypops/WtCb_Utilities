@@ -15,6 +15,8 @@ namespace Wetcardboard_Utilities_Models.Database
 
         [JsonPropertyName("id")]
         public int Id { get; set; }
+        [JsonPropertyName("user_country_language_id")]
+        public int UserCountryLanguageId { get; set; }
         [JsonPropertyName("user_role_id")]
         public int UserRoleId { get; set; }
 

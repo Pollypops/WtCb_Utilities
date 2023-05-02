@@ -1,0 +1,85 @@
+﻿@page "/settings"
+@using Wetcardboard_Components.Ui
+@using Wetcardboard_Utilities_Models.Database;
+@inject Wetcardboard_Utilities_Api_Services.Interfaces.IWetcardboard_Utilities_ApiService_LocalizationService _localizationService;
+
+
+<AuthorizeView>
+    <NotAuthorized>
+        <h3>You are not authorized to view this page.</h3>
+    </NotAuthorized>
+
+    <Authorized>
+        <div>
+            <Collapsible_BarWithContent_Vertical ContentContainerHeight="50px" HeaderText="Language" HeaderTextFontSize="16px">
+                <div style="display: flex; flex-direction: row;">
+                    <p>Localization language</p>
+                    <div style="flex: 1 1 auto;"></div>
+                    <div>
+                        <input type="text" @oninput="LanguageSearchInputOnInput" @onfocusin="LanguageInputOnFocusIn" @onfocusout="LanguageInputOnFocusOut" />
+                        <ul class="@LanguageSearchInputClass">
+                            @foreach (var language in SearchLanguages)
+                            {
+                                <li>(@language.Language) @language.CultureInfoCode</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </Collapsible_BarWithContent_Vertical>
+        </div>
+    </Authorized>
+</AuthorizeView>
+
+
+@code {
+    #region Fields & Properties
+    #region Properties
+    private IEnumerable<Wetcardboard_Utilities_LocalizationCountry> Languages { get; set; } = new List<Wetcardboard_Utilities_LocalizationCountry>();
+    private IEnumerable<Wetcardboard_Utilities_LocalizationCountry> SearchLanguages { get; set; } = new List<Wetcardboard_Utilities_LocalizationCountry>();
+    private string LanguageSearchInputClass { get; set; } = "input-search-language-hidden";
+    #endregion \ Properties
+    #endregion \ Fields & Properties
+
+
+    #region Methods
+    private async Task LanguageInputOnFocusIn()
+    {
+        LanguageSearchInputClass = "input-search-language";
+    }
+    private async Task LanguageInputOnFocusOut()
+    {
+        LanguageSearchInputClass = "input-search-language-hidden";
+    }
+    private async Task LanguageSearchInputOnInput(ChangeEventArgs e)
+    {
+        var input = e.Value as string;
+        if (input is null)
+        {
+            input = "";
+        }
+
+        var searchedLanugages = Languages.Where(
+            x =>
+                x.Language.Contains(input, StringComparison.OrdinalIgnoreCase) ||
+                x.CultureInfoCode.Contains(input, StringComparison.OrdinalIgnoreCase)
+        );
+        if (searchedLanugages is null)
+        {
+            searchedLanugages = new List<Wetcardboard_Utilities_LocalizationCountry>();
+        }
+
+        SearchLanguages = searchedLanugages;
+    }
+    #endregion \ Methods
+
+
+    #region Overrides
+    protected override async Task OnInitializedAsync()
+    {
+        var languages = await _localizationService.GetLocalizationCountriesAsync();
+        Languages = languages;
+        SearchLanguages = languages;
+        await base.OnInitializedAsync();
+    }
+    #endregion \ Overrides
+}

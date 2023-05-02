@@ -1,0 +1,32 @@
+﻿.headerContainer {
+    display: flex;
+    align-items: center;
+}
+
+.headerContainer_Order {
+    flex-direction: row;
+}
+
+.headerContainer_Order_Reversed {
+    flex-direction: row-reverse;
+}
+
+.header-text {
+    margin: 0;
+    margin-left: 5px;
+}
+
+.no-rotation {
+    transform: rotate(0deg);
+    top: -2px;
+}
+
+.upside-down-rotation {
+    transform: rotate(180deg);
+    top: 0;
+}
+
+.upside-down-rotation-reversed {
+    transform: rotate(-180deg);
+    top: 0;
+}

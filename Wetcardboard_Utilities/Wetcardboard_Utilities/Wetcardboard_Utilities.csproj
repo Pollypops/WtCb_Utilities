@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Wetcardboard_Authentication\Wetcardboard_Authentication.csproj" />
+    <ProjectReference Include="..\Wetcardboard_Components\Wetcardboard_Components.csproj" />
     <ProjectReference Include="..\Wetcardboard_Database\Wetcardboard_Database.csproj" />
     <ProjectReference Include="..\Wetcardboard_Utilities_Api_Services\Wetcardboard_Utilities_Api_Services.csproj" />
     <ProjectReference Include="..\Wetcardboard_Utilities_Database\Wetcardboard_Utilities_Database.csproj" />

@@ -1,0 +1,17 @@
+﻿.collapsibleContainer {
+    border: 1px solid black;
+    padding: 3px;
+}
+
+.input-search-language {
+    position: fixed;
+    max-height: 45vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin-top: 5px;
+    background: white;
+}
+
+.input-search-language-hidden {
+    display: none;
+}

@@ -4,6 +4,12 @@ namespace Wetcardboard_Utilities_Database.Connector
 {
     public interface IDbConn_Wetcardboard_Utilities
     {
+        #region Localization Countries
+        IEnumerable<Wetcardboard_Utilities_LocalizationCountry> GetLocalizationCountries();
+        Wetcardboard_Utilities_LocalizationCountry? GetLocalizationCountryById(int id);
+        #endregion \ Localization Countries
+
+
         #region Tokens
         bool AddUserToken(int userId, string token, DateTime expires);
         Wetcardboard_Utilities_UserToken? GetLatestActiveUserTokenByUserId(int userId);

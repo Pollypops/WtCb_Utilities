@@ -104,6 +104,7 @@ builder.Services.AddSingleton(CreateJwtFunctions(conf));
 builder.Services.AddSingleton(CreateSystemProps(conf));
 builder.Services.AddSingleton<IWtCbLogger, WtCbLogger_Db>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddSingleton<ILocalizationService, LocalizationService>();
 
 AddAuthentication(builder, conf);
 builder.Services.AddAuthorization();

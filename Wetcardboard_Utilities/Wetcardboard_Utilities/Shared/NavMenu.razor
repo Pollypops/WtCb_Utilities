@@ -9,33 +9,37 @@
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <AuthorizeView>
-                <Authorized>
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3">
                     <NavLink class="nav-link" href="home" Match="NavLinkMatch.All">
                         <span class="oi oi-home" aria-hidden="true" /> Home
                     </NavLink>
-                </Authorized>
-                <NotAuthorized>
-                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                        <span class="oi oi-home" aria-hidden="true" /> Home
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="settings">
+                        <span class="oi oi-cog" aria-hidden="true" /> Settings
                     </NavLink>
-                </NotAuthorized>
-            </AuthorizeView>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true" /> Counter
-            </NavLink>
-        </div>
-        <AuthorizeView>
-            <Authorized>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="counter">
+                        <span class="oi oi-plus" aria-hidden="true" /> Counter
+                    </NavLink>
+                </div>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="calendar">
                         <span class="oi oi-calendar" aria-hidden="true" /> Calendar
                     </NavLink>
                 </div>
             </Authorized>
+
+            <NotAuthorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true" /> Home
+                    </NavLink>
+                </div>
+            </NotAuthorized>
         </AuthorizeView>
     </nav>
 </div>
