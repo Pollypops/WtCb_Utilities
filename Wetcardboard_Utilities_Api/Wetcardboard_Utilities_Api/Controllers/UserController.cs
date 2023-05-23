@@ -49,12 +49,12 @@ namespace Wetcardboard_Utilities_Api.Controllers
             var userSettings = JsonConvert.DeserializeObject<IEnumerable<Wetcardboard_Utilities_UserSettings>>(jsonBody);
             if (userSettings is null)
             {
-                return BadRequest("No usersetting retrieved");
+                return BadRequest("No data retrieved");
             }
             var saveOk = _userService.SaveUserSettings(userGuid, userSettings);
             if (!saveOk)
             {
-                return StatusCode(500, "Something went wrong during save.");
+                return StatusCode(500, "Something went wrong.");
             }
             return Ok();
         }
