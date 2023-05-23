@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Wetcardboard_Shared.Logging;
 using Wetcardboard_Utilities_Api.Services.Interfaces;
 
 namespace Wetcardboard_Utilities_Api.Controllers
@@ -12,14 +13,16 @@ namespace Wetcardboard_Utilities_Api.Controllers
         #region Fields & Properties
         #region Fields
         private ITokenService _tokenService;
+        private IWtCbLogger _logger;
         #endregion \ Fields
         #endregion \ Fields & Properties
 
 
         #region Constructor
-        public TokenController(ITokenService tokenService)
+        public TokenController(ITokenService tokenService, IWtCbLogger logger)
         {
             _tokenService = tokenService;
+            _logger = logger;
         }
         #endregion \ Constructor
 
@@ -40,7 +43,9 @@ namespace Wetcardboard_Utilities_Api.Controllers
             }
             catch(Exception ex)
             {
-                var v = "";
+                var logMsg = "Error ocurred during JWT token creation.";
+                _logger.Log(logMsg, LogLevel.Error, exception: ex);
+                return StatusCode(500, "Something went wrong.");
             }
             return Ok();
         }
