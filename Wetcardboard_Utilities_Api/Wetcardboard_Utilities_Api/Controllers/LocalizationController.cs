@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Wetcardboard_Utilities_Api.Services.Interfaces;
 using Wetcardboard_Utilities_Models.Database;
 
@@ -27,15 +28,15 @@ namespace Wetcardboard_Utilities_Api.Controllers
 
         #region Endpoints
         [HttpGet]
-        [Authorize]
         [Route("Countries")]
         public async Task<IActionResult> GetCountries()
         {
-            var res = _localizationService.GetLocalizationCountries();
-            if (res is null)
+            var localizationCountries = _localizationService.GetLocalizationCountries();
+            if (localizationCountries is null)
             {
-                res = new List<Wetcardboard_Utilities_LocalizationCountry>();
+                localizationCountries = new List<Wetcardboard_Utilities_LocalizationCountry>();
             }
+            var res = JsonConvert.SerializeObject(localizationCountries);
             return Ok(res);
         }
         #endregion \ Endpoints
