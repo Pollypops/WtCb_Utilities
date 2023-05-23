@@ -55,6 +55,7 @@ namespace Wetcardboard_Components.Ui.Toast
                 return;
             }
             ToastMessages.Remove(tMessage);
+            StateHasChanged();
         }
         #endregion \ Public Methods
         #endregion \ Methods
