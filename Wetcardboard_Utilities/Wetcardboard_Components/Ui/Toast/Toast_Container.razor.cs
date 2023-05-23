@@ -43,7 +43,7 @@ namespace Wetcardboard_Components.Ui.Toast
                 Message = e.ToastMessage
             };
             ToastMessages.Add(toastMessage);
-            StateHasChanged();
+            InvokeAsync(StateHasChanged);
         }
         #endregion \ Private Methods
 
