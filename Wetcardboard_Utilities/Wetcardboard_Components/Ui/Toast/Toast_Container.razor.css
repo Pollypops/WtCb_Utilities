@@ -1,0 +1,9 @@
+﻿.toast-root-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    width: 32vw;
+    max-width: 32vw;
+    align-items: end;
+}

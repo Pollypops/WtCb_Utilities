@@ -1,4 +1,4 @@
-﻿namespace Wetcardboard_Shared.Navigation
+﻿namespace Wetcardboard_Utilities_General.Navigation
 {
     public class UrlFactory
     {

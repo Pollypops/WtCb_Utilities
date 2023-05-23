@@ -1,0 +1,67 @@
+﻿@using Wetcardboard_Components.Ui
+@using Wetcardboard_Services.Interfaces;
+@using Wetcardboard_Utilities_Api_Services.Interfaces;
+@inject IWetcardboard_ToastService _toastService;
+@inject IWetcardboard_Utilities_ApiService_LocalizationService _localizationService;
+@inject IWetcardboard_Utilities_ApiService_UserService _userService;
+
+<div>
+    <div class="flex settings-top-container">
+        <div>
+            <h1>Settings</h1>
+        </div>
+        <div class="flex-11auto" />
+        @if (@HasSettingsChanges)
+        {
+            <div class="flex save-changes-container">
+                <div class="flex flex-row">
+                    <CustText Margin_Right="5px" Align_Self="center" Text="You have unsaved changes" />
+                    <CustButton Height="35px" Width="80px" Text="Save"
+                                OnClick="@SaveOnClick" />
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="collapsible-container">
+        <AuthorizeView Roles="User,Admin">
+            <Collapsible_BarWithContent_Vertical ContentContainerHeight="50px" HeaderText="Language" HeaderTextFontSize="@HeaderTextFontSize">
+                <div class="flex flex-row">
+                    <CustText Align_Self="center" Text="Localization language" />
+                    <div class="flex-11auto" />
+                    <div class="language-selector-container">
+                        <input list="searchLangList" @onchange="LanguageSearchInputOnInput" value="@Settings.OrgLocalizationCountry" />
+                        <datalist id="searchLangList">
+                            @foreach (var language in Languages)
+                            {
+                                <option value="@language.CultureInfoCode" hidden>
+                                    <div>
+                                        @language.Language
+                                    </div>
+                                    <div>
+                                        (@language.CultureInfoCode)
+                                    </div>
+                                </option>
+                            }
+                        </datalist>
+                    </div>
+                </div>
+            </Collapsible_BarWithContent_Vertical>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="Admin">
+            <Collapsible_BarWithContent_Vertical ContentContainerHeight="50px" HeaderText="Admin" HeaderTextFontSize="@HeaderTextFontSize">
+                <div class="flex flex-col">
+                    <div class="flex flex-row">
+                        <div class="flex flex-row items-center">
+                            <CustText Text="Toast Message" />
+                        </div>
+                        <div class="flex flex-row flex-11auto content-end">
+                            <CustButton Height="35px" Width="135px" Text="Toast Message" OnClick="@CreateToastMessageOnClick" />
+                        </div>
+                    </div>
+                </div>
+            </Collapsible_BarWithContent_Vertical>
+        </AuthorizeView>
+    </div>
+</div>

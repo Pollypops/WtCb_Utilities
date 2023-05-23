@@ -1,4 +1,4 @@
-﻿namespace Wetcardboard_Shared.Http
+﻿namespace Wetcardboard_Utilities_General.Http
 {
     public class HttpFunctions : IHttpFunctions
     {

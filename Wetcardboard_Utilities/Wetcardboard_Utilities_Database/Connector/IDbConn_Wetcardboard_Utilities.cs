@@ -21,5 +21,11 @@ namespace Wetcardboard_Utilities_Database.Connector
         Wetcardboard_Utilities_User? GetUserByEmail(string email);
         Wetcardboard_Utilities_User? GetUserByGuid(string guid);
         #endregion \ Users
+
+
+        #region User Settings
+        bool SaveUserSetting(string userGuid, Wetcardboard_Utilities_UserSettings setting);
+        IEnumerable<Wetcardboard_Utilities_UserSettings>? GetUserSettings(string userGuid);
+        #endregion \ User Settings
     }
 }

@@ -1,5 +1,5 @@
-﻿using System.Data;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
+using System.Data;
 using Wetcardboard_Database.Models;
 
 namespace Wetcardboard_Utilities_Models.Database
@@ -8,22 +8,22 @@ namespace Wetcardboard_Utilities_Models.Database
     {
         #region Fields & Properties
         #region Properties
-        [JsonPropertyName("id")]
+        [JsonProperty(propertyName: "id")]
         public int Id { get; set; }
 
-        [JsonPropertyName("country")]
+        [JsonProperty(propertyName: "country")]
         public string Country { get; set; } = string.Empty;
-        [JsonPropertyName("country_code_2")]
+        [JsonProperty(propertyName: "country_code_2")]
         public string CountryCode2 { get; set; } = string.Empty;
-        [JsonPropertyName("country_code_3")]
+        [JsonProperty(propertyName: "country_code_3")]
         public string CountryCode3 { get; set; } = string.Empty;
-        [JsonPropertyName("culture_info_code")]
+        [JsonProperty(propertyName: "culture_info_code")]
         public string CultureInfoCode { get; set; } = string.Empty;
-        [JsonPropertyName("language")]
+        [JsonProperty(propertyName: "language")]
         public string Language { get; set; } = string.Empty;
-        [JsonPropertyName("lang_code_2")]
+        [JsonProperty(propertyName: "lang_code_2")]
         public string LangCode2 { get; set; } = string.Empty;
-        [JsonPropertyName("lang_code_3")]
+        [JsonProperty(propertyName: "lang_code_3")]
         public string LangCode3 { get; set; } = string.Empty;
         #endregion \ Properties
         #endregion \ Fields & Properties

@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Wetcardboard_Shared.Extensions
+namespace Wetcardboard_Utilities_General.Extensions
 {
     public static class Extension_String
     {

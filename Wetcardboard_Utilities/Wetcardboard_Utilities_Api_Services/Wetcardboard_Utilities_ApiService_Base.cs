@@ -43,6 +43,7 @@ namespace Wetcardboard_Utilities_Api_Services
 
 
         #region Methods
+        #region Protected Methods
         protected HttpRequestMessage GetHttpRequestMessage_Bearer(HttpMethod method, string url)
         {
             var httpContext = _httpContextAccessor.HttpContext;
@@ -57,6 +58,17 @@ namespace Wetcardboard_Utilities_Api_Services
             res.Headers.TryAddWithoutValidation("Authorization", $"Bearer {tokenClaim.Value}");
             return res;
         }
+        protected string GetUserGuid()
+        {
+            var httpContext = _httpContextAccessor.HttpContext;
+            var user = httpContext.User;
+            var userGuidClaim = httpContext.User.Claims.First(x => string.Equals(x.Type, "guid", StringComparison.OrdinalIgnoreCase));
+            if (string.IsNullOrEmpty(userGuidClaim.Value)) {
+                return string.Empty;
+            }
+            return userGuidClaim.Value;
+        }
+        #endregion \ Protected Methods
         #endregion \ Methods
     }
 }

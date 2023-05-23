@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Wetcardboard_Database\Wetcardboard_Database.csproj" />
+    <ProjectReference Include="..\Wetcardboard_Utilities_General\Wetcardboard_General.csproj" />
   </ItemGroup>
 
 </Project>

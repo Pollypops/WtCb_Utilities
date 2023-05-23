@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System.Net;
-using System.Text.Json;
 using Wetcardboard_Shared.Logging;
 using Wetcardboard_Utilities_Api_Services.Interfaces;
 using Wetcardboard_Utilities_Models.Database;
@@ -64,7 +64,7 @@ namespace Wetcardboard_Utilities_Api_Services.Implementations
                 return new List<Wetcardboard_Utilities_LocalizationCountry>();
             }
 
-            var res = JsonSerializer.Deserialize<List<Wetcardboard_Utilities_LocalizationCountry>>(respContent);
+            var res = JsonConvert.DeserializeObject<IEnumerable<Wetcardboard_Utilities_LocalizationCountry>>(respContent);
             if (res is null)
             { // Should not happen
                 return new List<Wetcardboard_Utilities_LocalizationCountry>();

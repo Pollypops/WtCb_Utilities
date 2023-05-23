@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using Wetcardboard_Database.Connector;
 using Wetcardboard_Database.DbTypes;
 using Wetcardboard_Database.Parameters;
-using Wetcardboard_Shared.Constants;
+using Wetcardboard_Utilities_General.Constants;
 using Wetcardboard_Utilities_Models.System;
 
 namespace Wetcardboard_Shared.Logging

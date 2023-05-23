@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace Wetcardboard_Shared.Security.Jwt
+namespace Wetcardboard_Utilities_General.Security.Jwt
 {
     public interface IJwtFunctions
     {

@@ -1,23 +1,20 @@
-﻿using Wetcardboard_Database.Connector;
+﻿using Microsoft.Extensions.Logging;
+using Wetcardboard_Database.Connector;
 using Wetcardboard_Database.Helpers;
 using Wetcardboard_Database.Parameters;
-using Wetcardboard_Shared.Constants;
+using Wetcardboard_Shared.Logging;
+using Wetcardboard_Utilities_General.Constants;
 using Wetcardboard_Utilities_Models.Database;
 
 namespace Wetcardboard_Utilities_Database.Connector
 {
-    public class DbConn_Wetcardboard_Utilities_MySql : IDbConn_Wetcardboard_Utilities
+    public class DbConn_Wetcardboard_Utilities_MySql : DbConn_Wetcardboard_Utilities_Base, IDbConn_Wetcardboard_Utilities
     {
-        #region Fields & Properties
-        private IDbConn DbConn { get; }
-        #endregion \ Fields & Properties
-
-
         #region Constructor
-        public DbConn_Wetcardboard_Utilities_MySql(IDbConn dbConn)
-        {
-            DbConn = dbConn;
-        }
+        public DbConn_Wetcardboard_Utilities_MySql(
+            IDbConn dbConn,
+            IWtCbLogger logger
+            ) : base(dbConn, logger) { }
         #endregion \ Constructor
 
 
@@ -26,11 +23,11 @@ namespace Wetcardboard_Utilities_Database.Connector
         #region Localization Countries
         public Wetcardboard_Utilities_LocalizationCountry? GetCountryById(int id)
         {
-            var parameters = new List<SqlParameterWithValue> 
+            var parameters = new List<SqlParameterWithValue>
             {
                 new SqlParameterWithValue("_id", id)
             };
-            var dbRes = DbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETLOCALIZATIONCOUNTRYBYID, parameters);
+            var dbRes = _dbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETLOCALIZATIONCOUNTRYBYID, parameters);
             if (dbRes is null || dbRes.Tables.Count == 0)
             {
                 return null;
@@ -45,13 +42,13 @@ namespace Wetcardboard_Utilities_Database.Connector
         {
             var res = new List<Wetcardboard_Utilities_LocalizationCountry>();
 
-            var dbRes = DbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETLOCALIZATIONCOUNTRIES);
+            var dbRes = _dbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETLOCALIZATIONCOUNTRIES);
             if (dbRes is null || dbRes.Tables.Count == 0)
             {
                 return res;
             }
 
-            var rows = DbConn.GetDataRows(dbRes, 0);
+            var rows = _dbConn.GetDataRows(dbRes, 0);
             foreach (var row in rows)
             {
                 var country = Wetcardboard_Utilities_LocalizationCountry.CreateFromDataRow(row) as Wetcardboard_Utilities_LocalizationCountry;
@@ -71,7 +68,7 @@ namespace Wetcardboard_Utilities_Database.Connector
                 new SqlParameterWithValue("_id", id)
             };
 
-            var dbRes = DbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETLOCALIZATIONCOUNTRYBYID, parameters);
+            var dbRes = _dbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETLOCALIZATIONCOUNTRYBYID, parameters);
             if (dbRes is null || dbRes.Tables.Count == 0)
             {
                 return null;
@@ -92,7 +89,7 @@ namespace Wetcardboard_Utilities_Database.Connector
                 new SqlParameterWithValue("_token", token),
                 new SqlParameterWithValue("_expires", expires)
             };
-            var dbRes = DbConn.ExecuteStoredProcedureNonQuery(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_USERTOKENS_ADD, parameters);
+            var dbRes = _dbConn.ExecuteStoredProcedureNonQuery(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_USERTOKENS_ADD, parameters);
             if (dbRes < 1)
             {
                 return false;
@@ -106,7 +103,7 @@ namespace Wetcardboard_Utilities_Database.Connector
             {
                 new SqlParameterWithValue("_user_id", userId)
             };
-            var dbRes = DbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETLATESTACTIVEUSERTOKENBYUSERID, parameters);
+            var dbRes = _dbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETLATESTACTIVEUSERTOKENBYUSERID, parameters);
             if (dbRes is null || dbRes.Tables.Count == 0)
             {
                 return null;
@@ -120,7 +117,7 @@ namespace Wetcardboard_Utilities_Database.Connector
             {
                 new SqlParameterWithValue("_user_guid", userGuid)
             };
-            var dbRes = DbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETLATESTACTIVEUSERTOKENBYUSERGUID, parameters);
+            var dbRes = _dbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETLATESTACTIVEUSERTOKENBYUSERGUID, parameters);
             if (dbRes is null || dbRes.Tables.Count == 0)
             {
                 return null;
@@ -138,7 +135,7 @@ namespace Wetcardboard_Utilities_Database.Connector
             {
                 new SqlParameterWithValue("_email", email)
             };
-            var dbRes = DbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETUSERBYEMAIL, parameters);
+            var dbRes = _dbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETUSERBYEMAIL, parameters);
             if (dbRes is null || dbRes.Tables.Count == 0)
             {
                 return null;
@@ -152,7 +149,7 @@ namespace Wetcardboard_Utilities_Database.Connector
             {
                 new SqlParameterWithValue("_guid", guid)
             };
-            var dbRes = DbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETUSERBYGUID, parameters);
+            var dbRes = _dbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETUSERBYGUID, parameters);
             if (dbRes is null || dbRes.Tables.Count == 0)
             {
                 return null;
@@ -161,6 +158,47 @@ namespace Wetcardboard_Utilities_Database.Connector
             return DbHelper.GetSingleObjectFromDataSet<Wetcardboard_Utilities_User>(dbRes);
         }
         #endregion \ Users
+
+
+        #region User Settings
+        public bool SaveUserSetting(string userGuid, Wetcardboard_Utilities_UserSettings setting)
+        {
+            if (string.IsNullOrEmpty(setting.SettingName) || string.IsNullOrEmpty(setting.SettingValue))
+            {
+                return false;
+            }
+
+            var parameters = new List<SqlParameterWithValue>
+            {
+                new SqlParameterWithValue("_user_Guid", userGuid),
+                new SqlParameterWithValue("_setting_Name", setting.SettingName),
+                new SqlParameterWithValue("_setting_Value", setting.SettingValue)
+            };
+            var dbRes = _dbConn.ExecuteStoredProcedureNonQuery(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_SAVEUSERSETTINGS, parameters);
+            if (dbRes < 1)
+            {
+                var logMsg = $"Error saving user setting - UserGuid: '{userGuid}', SettingName: '{setting.SettingName}', SettingValue: '{setting.SettingValue}'";
+                _logger.Log(logMsg, LogLevel.Error);
+                return false;
+            }
+
+            return true;
+        }
+        public IEnumerable<Wetcardboard_Utilities_UserSettings>? GetUserSettings(string userGuid)
+        {
+            var parameters = new List<SqlParameterWithValue>
+            {
+                new SqlParameterWithValue("_userGuid", userGuid)
+            };
+            var dbRes = _dbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETUSERSETTINGSBYUSERGUID, parameters);
+            if (dbRes is null || dbRes.Tables.Count == 0)
+            {
+                return null;
+            }
+
+            return DbHelper.GetObjectsDataSet<Wetcardboard_Utilities_UserSettings>(dbRes);
+        }
+        #endregion \ User Settings
         #endregion \ IDbConn_Wetcardboard_Utilities Implementation
         #endregion \ Interface Implementations
     }

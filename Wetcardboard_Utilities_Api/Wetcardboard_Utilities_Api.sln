@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wetcardboard_Database", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wetcardboard_Utilities_Database", "..\Wetcardboard_Utilities\Wetcardboard_Utilities_Database\Wetcardboard_Utilities_Database.csproj", "{B0F58E7B-4B84-4D18-9388-C9372CB74855}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wetcardboard_General", "..\Wetcardboard_Utilities\Wetcardboard_Utilities_General\Wetcardboard_General.csproj", "{77D38203-6110-4F02-BEB5-A864F7A9DD87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{B0F58E7B-4B84-4D18-9388-C9372CB74855}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0F58E7B-4B84-4D18-9388-C9372CB74855}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0F58E7B-4B84-4D18-9388-C9372CB74855}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77D38203-6110-4F02-BEB5-A864F7A9DD87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D38203-6110-4F02-BEB5-A864F7A9DD87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77D38203-6110-4F02-BEB5-A864F7A9DD87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77D38203-6110-4F02-BEB5-A864F7A9DD87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

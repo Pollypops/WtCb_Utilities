@@ -33,5 +33,35 @@ namespace Wetcardboard_Database.Helpers
 
             return (T)T.CreateFromDataRow(row);
         }
+
+        /// <summary>
+        /// Return IEnumerable with content of type T. <para/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataSet"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> GetObjectsDataSet<T>(DataSet dataSet) where T : DbModelBase
+        {
+            var res = new List<T>();
+
+            if (dataSet.Tables.Count == 0)
+            {
+                return res;
+            }
+
+            var tbl = dataSet.Tables[0];
+            if (tbl is null || tbl.Rows.Count == 0)
+            {
+                return res;
+            }
+
+            foreach(DataRow row in tbl.Rows)
+            {
+                var tObj = (T)T.CreateFromDataRow(row);
+                res.Add(tObj);
+            }
+
+            return res;
+        }
     }
 }

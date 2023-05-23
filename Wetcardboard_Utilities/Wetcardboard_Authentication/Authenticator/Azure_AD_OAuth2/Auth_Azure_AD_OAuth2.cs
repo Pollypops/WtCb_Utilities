@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Text.Json;
-using Wetcardboard_Shared.Extensions;
+using Wetcardboard_Utilities_General.Extensions;
 
 namespace Wetcardboard_Authentication.Authenticator.Azure_AD_OAuth2
 {

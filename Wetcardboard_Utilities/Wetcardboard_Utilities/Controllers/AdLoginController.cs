@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Wetcardboard_Authentication.Authenticator;
 using Wetcardboard_Authentication.Authenticator.Azure_AD_OAuth2;
-using Wetcardboard_Shared.Navigation;
-using Wetcardboard_Shared.Security.Jwt;
-using Wetcardboard_Utilities.Database.Interfaces;
 using Wetcardboard_Utilities_Api_Services.Interfaces;
+using Wetcardboard_Utilities.Database.Interfaces;
+using Wetcardboard_Utilities_General.Security.Jwt;
 using Wetcardboard_Utilities_Models.Front_End;
+using Wetcardboard_Utilities_General.Navigation;
 
 namespace Wetcardboard_Utilities.Controllers
 {

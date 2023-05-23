@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Wetcardboard_Shared.Security.Jwt
+namespace Wetcardboard_Utilities_General.Security.Jwt
 {
     public class JwtFunctions : IJwtFunctions
     {

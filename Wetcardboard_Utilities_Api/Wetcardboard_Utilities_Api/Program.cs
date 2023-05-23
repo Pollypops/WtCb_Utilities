@@ -3,10 +3,10 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Wetcardboard_Database.Connector;
 using Wetcardboard_Shared.Logging;
-using Wetcardboard_Shared.Security.Jwt;
 using Wetcardboard_Utilities_Api.Services.Implementations;
 using Wetcardboard_Utilities_Api.Services.Interfaces;
 using Wetcardboard_Utilities_Database.Connector;
+using Wetcardboard_Utilities_General.Security.Jwt;
 using Wetcardboard_Utilities_Models.System;
 
 IJwtFunctions CreateJwtFunctions(ConfigurationManager conf)
@@ -105,6 +105,7 @@ builder.Services.AddSingleton(CreateSystemProps(conf));
 builder.Services.AddSingleton<IWtCbLogger, WtCbLogger_Db>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddSingleton<ILocalizationService, LocalizationService>();
+builder.Services.AddSingleton<IUserService, UserService>();
 
 AddAuthentication(builder, conf);
 builder.Services.AddAuthorization();

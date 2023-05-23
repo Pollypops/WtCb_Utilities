@@ -15,4 +15,17 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Ui\Toast\Toast_Message.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Ui\Toast\Toast_Message.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Wetcardboard_Models\Wetcardboard_Models.csproj" />
+    <ProjectReference Include="..\Wetcardboard_Services\Wetcardboard_Services.csproj" />
+  </ItemGroup>
+
 </Project>

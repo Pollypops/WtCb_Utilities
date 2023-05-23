@@ -30,10 +30,17 @@ namespace Wetcardboard_Utilities_Api.Controllers
         [Route("{guid}")]
         public IActionResult Put(string guid)
         {
-            var res = _tokenService.CreateUserJwtToken(guid);
-            if (!res)
+            try
             {
-                return BadRequest();
+                var res = _tokenService.CreateUserJwtToken(guid);
+                if (!res)
+                {
+                    return BadRequest();
+                }
+            }
+            catch(Exception ex)
+            {
+                var v = "";
             }
             return Ok();
         }

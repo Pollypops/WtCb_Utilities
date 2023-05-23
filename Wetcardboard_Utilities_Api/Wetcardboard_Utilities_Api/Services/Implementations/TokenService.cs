@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using Wetcardboard_Shared.Logging;
-using Wetcardboard_Shared.Security.Jwt;
 using Wetcardboard_Utilities_Api.Services.Interfaces;
 using Wetcardboard_Utilities_Database.Connector;
+using Wetcardboard_Utilities_General.Security.Jwt;
 
 namespace Wetcardboard_Utilities_Api.Services.Implementations
 {

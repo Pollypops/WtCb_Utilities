@@ -4,17 +4,19 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Wetcardboard_Authentication.Authenticator;
 using Wetcardboard_Authentication.Authenticator.Azure_AD_OAuth2;
 using Wetcardboard_Database.Connector;
-using Wetcardboard_Shared.Http;
 using Wetcardboard_Shared.Logging;
-using Wetcardboard_Shared.Navigation;
-using Wetcardboard_Shared.Security.Jwt;
-using Wetcardboard_Utilities.Database.Implementations;
-using Wetcardboard_Utilities.Database.Interfaces;
 using Wetcardboard_Utilities_Api_Services.Implementations;
 using Wetcardboard_Utilities_Api_Services.Interfaces;
 using Wetcardboard_Utilities_Database.Connector;
+using Wetcardboard_Utilities.Database.Implementations;
+using Wetcardboard_Utilities.Database.Interfaces;
+using Wetcardboard_Utilities_General.Http;
+using Wetcardboard_Utilities_General.Navigation;
+using Wetcardboard_Utilities_General.Security.Jwt;
 using Wetcardboard_Utilities_Models.Front_End;
 using Wetcardboard_Utilities_Models.System;
+using Wetcardboard_Services.Interfaces;
+using Wetcardboard_Services.Implementations;
 
 Auth_DtModelProps_Azure_AD_OAuth2_Auth GetAzureAdAuthProps(ConfigurationManager conf)
 {
@@ -203,6 +205,8 @@ builder.Services.AddSingleton<IDbConn_Wetcardboard_Utilities_Fe, DbConn_Wetcardb
 builder.Services.AddSingleton<IWtCbLogger, WtCbLogger_Db>();
 builder.Services.AddSingleton<IWetcardboard_Utilities_ApiService_LocalizationService, Wetcardboard_Utilities_ApiService_LocalizationService>();
 builder.Services.AddSingleton<IWetcardboard_Utilities_ApiService_TokenService, Wetcardboard_Utilities_ApiService_TokenService>();
+builder.Services.AddSingleton<IWetcardboard_Utilities_ApiService_UserService, Wetcardboard_Utilities_ApiService_UserService>();
+builder.Services.AddSingleton<IWetcardboard_ToastService, Wetcardboard_ToastService>();
 
 builder.Services.AddControllers();
 
