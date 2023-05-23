@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using Wetcardboard_Database.Connector;
 using Wetcardboard_Database.DbTypes;
 using Wetcardboard_Database.Parameters;
+using Wetcardboard_General.Extensions;
 using Wetcardboard_Utilities_General.Constants;
 using Wetcardboard_Utilities_Models.System;
 
@@ -31,11 +32,22 @@ namespace Wetcardboard_Shared.Logging
         public void Log(string message, LogLevel logLevel = LogLevel.Information, Exception? exception = null, int? userId = null, 
             [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
         {
+            string exMsg;
+            if (exception != null)
+            {
+                exMsg = exception.GetFullExceptionMessage();
+            }
+            else
+            {
+                exMsg = string.Empty;
+            }
+
             var parameters = new List<SqlParameterWithValue>
             {
                 new SqlParameterWithValue("_systemIdentifier", DatabaseType.VarChar, _systemProps.SystemIdentifier),
                 new SqlParameterWithValue("_userId", DatabaseType.Int, userId),
                 new SqlParameterWithValue("_message", DatabaseType.MediumText, message),
+                new SqlParameterWithValue("_exMessage", DatabaseType.MediumText, exMsg),
                 new SqlParameterWithValue("_severity", DatabaseType.VarChar, logLevel.ToString()),
                 new SqlParameterWithValue("_loggingFile", DatabaseType.VarChar, callerFilePath),
                 new SqlParameterWithValue("_loggingMember", DatabaseType.VarChar, callerMemberName),
