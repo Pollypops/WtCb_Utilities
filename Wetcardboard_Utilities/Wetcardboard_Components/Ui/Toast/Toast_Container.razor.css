@@ -1,8 +1,14 @@
-﻿.toast-root-container {
+﻿.toast-root {
+    position: fixed;
+    right: 0;
+    z-index: 2;
+    max-height: 90vh;
+    overflow: hidden;
+}
+
+.toast-root-container {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    right: 0;
     width: 32vw;
     max-width: 32vw;
     align-items: end;

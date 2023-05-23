@@ -1,9 +1,11 @@
 ﻿@using Wetcardboard_Services.Interfaces;
 @inject IWetcardboard_ToastService _toastService;
 
-<div class="toast-root-container">
-    @foreach(var tMessage in ToastMessages)
-    {
-        <Toast_Message Message="@tMessage.Message" OnClick="async (e) => { await ToastMessageOnClick(e, tMessage); }" />
-    }
+<div class="toast-root">
+    <div class="toast-root-container">
+        @foreach (var tMessage in ToastMessages)
+        {
+            <Toast_Message Message="@tMessage.Message" OnClick="async (e) => { await ToastMessageOnClick(e, tMessage); }" />
+        }
+    </div>
 </div>
