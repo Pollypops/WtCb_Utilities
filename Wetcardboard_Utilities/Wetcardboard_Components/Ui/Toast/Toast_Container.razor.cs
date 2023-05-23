@@ -19,7 +19,7 @@ namespace Wetcardboard_Components.Ui.Toast
         {
             while (true)
             {
-                await Task.Delay(3000);
+                await Task.Delay(2500);
 
                 var expiredMsgs = ToastMessages.Where(x => DateTime.Now > x.ExpiryTime)?.ToList();
                 if (expiredMsgs is null)
