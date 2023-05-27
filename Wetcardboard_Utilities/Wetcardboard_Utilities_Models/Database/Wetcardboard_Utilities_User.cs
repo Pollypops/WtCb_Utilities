@@ -17,8 +17,6 @@ namespace Wetcardboard_Utilities_Models.Database
         public int Id { get; set; }
         [JsonPropertyName("user_country_language_id")]
         public int UserCountryLanguageId { get; set; }
-        [JsonPropertyName("user_role_id")]
-        public int UserRoleId { get; set; }
 
         [JsonPropertyName("first_name")]
         public string FirstName { get; set; } = string.Empty;
@@ -28,8 +26,6 @@ namespace Wetcardboard_Utilities_Models.Database
         public string LastName { get; set; } = string.Empty;
         [JsonPropertyName("login")]
         public string Login { get; set; } = string.Empty;
-        [JsonPropertyName("user_role")]
-        public string UserRole { get; set; } = string.Empty;
         #endregion \ Properties
         #endregion \ Fields & Properties
 
@@ -45,8 +41,6 @@ namespace Wetcardboard_Utilities_Models.Database
             var login = Convert.ToString(row["login"]) ?? "";
             var firstName = Convert.ToString(row["first_name"]) ?? "";
             var lastName = Convert.ToString(row["last_name"]) ?? "";
-            var userRoleId = Convert.ToInt32(row["user_role_id"]);
-            var userRole = Convert.ToString(row["user_role"]) ?? "";
 
             return new Wetcardboard_Utilities_User
             {
@@ -57,8 +51,6 @@ namespace Wetcardboard_Utilities_Models.Database
                 Login = login,
                 FirstName = firstName,
                 LastName = lastName,
-                UserRoleId = userRoleId,
-                UserRole = userRole
             };
         }
         #endregion \ DbModelBase Implementation

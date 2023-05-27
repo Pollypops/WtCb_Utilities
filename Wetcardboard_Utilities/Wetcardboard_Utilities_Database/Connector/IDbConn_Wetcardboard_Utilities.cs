@@ -23,6 +23,11 @@ namespace Wetcardboard_Utilities_Database.Connector
         #endregion \ Users
 
 
+        #region User Roles
+        IEnumerable<string> GetUserRolesByUserGuid(string guid);
+        #endregion \ User Roles
+
+
         #region User Settings
         bool SaveUserSetting(string userGuid, Wetcardboard_Utilities_UserSettings setting);
         IEnumerable<Wetcardboard_Utilities_UserSettings>? GetUserSettings(string userGuid);

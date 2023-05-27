@@ -26,6 +26,7 @@ namespace Wetcardboard_Utilities.Database.Implementations
 
         #region Interface Implementations
         #region IWetcardboard_Utilities_Fe_DbConn Implementation
+        #region Users
         public Wetcardboard_Utilities_Fe_User? GetUserByEmail(string email)
         {
             var user = _dbConn.GetUserByEmail(email);
@@ -37,8 +38,7 @@ namespace Wetcardboard_Utilities.Database.Implementations
             var res = new Wetcardboard_Utilities_Fe_User
             {
                 Guid = user.Guid,
-                Login = user.Login,
-                UserRole = user.UserRole,
+                Login = user.Login
             };
             return res;
         }
@@ -52,6 +52,15 @@ namespace Wetcardboard_Utilities.Database.Implementations
 
             return token;
         }
+        #endregion \ Users
+
+
+        #region User Roles
+        public IEnumerable<string> GetUserRolesByUserGuid(string guid)
+        {
+            return _dbConn.GetUserRolesByUserGuid(guid);
+        }
+        #endregion \ User Roles
         #endregion \ IWetcardboard_Utilities_Fe_DbConn
         #endregion \ Interface Implementations
     }

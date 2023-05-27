@@ -101,6 +101,8 @@ namespace Wetcardboard_Utilities.Controllers
                 return NotFound("User not registered in system.");
             }
 
+            var userRoles = _dbConn.GetUserRolesByUserGuid(user.Guid);
+
             var tokenCreated = await _tokenService.CreateUserJwtTokenAsync(user.Guid);
             if (!tokenCreated)
             {
@@ -116,7 +118,10 @@ namespace Wetcardboard_Utilities.Controllers
             var id = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
             id.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Login));
             id.AddClaim(new Claim(ClaimTypes.Name, user.Login));
-            id.AddClaim(new Claim(ClaimTypes.Role, user.UserRole));
+            foreach (var role in userRoles)
+            {
+                id.AddClaim(new Claim(ClaimTypes.Role, role));
+            }
             id.AddClaim(new Claim("api_token", apiToken.Token));
             id.AddClaim(new Claim("guid", user.Guid));
 

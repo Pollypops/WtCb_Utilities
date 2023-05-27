@@ -39,15 +39,19 @@ namespace Wetcardboard_Utilities_Api.Services.Implementations
                 return false;
             }
 
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Role, user.UserRole)
-            };
+            var userRoles = _dbConn_Wetcardboard_Utilities.GetUserRolesByUserGuid(userGuid);
 
             var id = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
             id.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Login));
             id.AddClaim(new Claim(ClaimTypes.Name, user.Login));
-            id.AddClaim(new Claim(ClaimTypes.Role, user.UserRole));
+
+            var claims = new List<Claim>();
+            foreach(var role in userRoles)
+            {
+                var claim = new Claim(ClaimTypes.Role, role);
+                claims.Add(claim);
+                id.AddClaim(claim);
+            }
 
             var expires = DateTime.UtcNow.AddHours(5);
             var jwtToken = _jwtFunctions.GenerateJwtToken(user.Id, user.Login, claims, expires);

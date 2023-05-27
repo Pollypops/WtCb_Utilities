@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Data;
 using Wetcardboard_Database.Connector;
 using Wetcardboard_Database.Helpers;
 using Wetcardboard_Database.Parameters;
@@ -158,6 +159,32 @@ namespace Wetcardboard_Utilities_Database.Connector
             return DbHelper.GetSingleObjectFromDataSet<Wetcardboard_Utilities_User>(dbRes);
         }
         #endregion \ Users
+
+
+        #region User Roles
+        public IEnumerable<string> GetUserRolesByUserGuid(string guid)
+        {
+            var res = new List<string>();
+
+            var parameters = new List<SqlParameterWithValue>
+            {
+                new SqlParameterWithValue("_guid", guid)
+            };
+            var dbRes = _dbConn.ExecuteStoredProcedure(StoredProcedureConstants_Wetcardboard_Utilities.WETCARDBOARD_UTILITIES_SP_GETUSERROLESBYUSERGUID, parameters);
+            if (dbRes is null || dbRes.Tables.Count == 0)
+            {
+                return res;
+            }
+
+            foreach(DataRow row in dbRes.Tables[0].Rows)
+            {
+                var role = $"{row["role"]}";
+                res.Add(role);
+            }
+
+            return res;
+        }
+        #endregion \ User Roles
 
 
         #region User Settings
